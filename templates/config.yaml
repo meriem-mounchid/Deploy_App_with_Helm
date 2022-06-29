@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.postgresxd.config.name }}
+  labels:
+    group: {{ .Values.postgresxd.group }}
+data: 
+{{- range .Values.postgresxd.config.data }}
+  {{ .key }}: {{ .value }}
+{{- end}}

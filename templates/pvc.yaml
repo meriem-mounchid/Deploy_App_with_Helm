@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: {{ .Values.postgresxd.volume.kind }}
+metadata:
+  name: {{ .Values.postgresxd.volume.pvc.name }}
+spec:
+  accessModes:
+    - {{ .Values.postgresxd.volume.pvc.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.postgresxd.volume.pvc.storage }}

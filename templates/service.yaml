@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.postgresxd.name }}
+  labels: 
+    group: {{ .Values.postgresxd.group }}
+spec:
+  type: {{ .Values.postgresxd.service.type }}
+  selector:             
+    app: {{ .Values.postgresxd.name }}
+  ports:
+    - port: {{ .Values.postgresxd.service.port }}       
+      targetPort: {{ .Values.postgresxd.container.port }} 

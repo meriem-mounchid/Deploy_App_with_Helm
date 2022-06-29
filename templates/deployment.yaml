@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.postgresxd.name }}
+  labels:
+    app: {{ .Values.postgresxd.name }}
+    group: {{ .Values.postgresxd.group }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.postgresxd.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.postgresxd.name }}
+        group: {{ .Values.postgresxd.group }}
+    spec:
+      volumes:
+        - name: {{ .Values.postgresxd.volume.name }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.postgresxd.volume.pvc.name }}
+      containers:
+        - name: {{ .Values.postgresxd.name }}
+          image: {{ .Values.postgresxd.container.image }}  
+          ports:
+            - containerPort: {{ .Values.postgresxd.container.port }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.postgresxd.config.name }}
+          volumeMounts:             
+            - name: {{ .Values.postgresxd.volume.name }}
+              mountPath: {{ .Values.postgresxd.volume.mountPath }} 
